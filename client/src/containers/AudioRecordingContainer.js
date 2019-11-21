@@ -272,23 +272,33 @@ class AudioRecordingContainer extends Component {
         const audio = exportBuffer(buffer[0]);
         console.log("Processed audio, sending audio to backend");
         // Do your audio processing here.
-        // console.log('AUDIO IS', audio);
+        console.log('AUDIO IS', audio);
         this.setState({
           recording: false
         });
-        const response = await fetch('http://localhost:5000/upload', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            encoding: 'LINEAR16', 
-            sampleRateHertz: exportSampleRate,
-            languageCode: 'en-US',
-            buffer : audio.buffer
-          })
-        });
+        // const response = await fetch('http://localhost:5000/upload', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     encoding: 'LINEAR16', 
+        //     sampleRateHertz: exportSampleRate,
+        //     languageCode: 'en-US',
+        //     buffer : audio.buffer
+        //   })
+        // });
+      const response = await fetch('http://localhost:5000/sayHi', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, 
+        body: {
+          'Hi': 'Jack',
+        }
+      });
       const body = await response.json();
       this.setState({transcript: body.transcript});
       console.log("Received response from backend, should be displaying");
